@@ -1,0 +1,138 @@
+/* ============================================================ v5: admin UX + responsive */
+
+/* ---------- admin attention bar & tab counts ---------- */
+.admin-alerts { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; padding: 12px 14px; border-radius: 16px; border: 1px solid var(--line); background: linear-gradient(90deg, var(--gold-soft), var(--surface)); }
+.admin-alerts.clear { border-color: rgba(52, 211, 153, 0.25); background: linear-gradient(90deg, var(--em-soft), var(--surface)); }
+.tab-label { display: inline-flex; align-items: center; gap: 6px; }
+.tab-count { min-width: 18px; height: 18px; padding: 0 5px; border-radius: 99px; background: var(--gold); color: var(--gold-ink); font-size: 10.5px; font-weight: 750; display: inline-grid; place-items: center; }
+
+/* ---------- drawer ---------- */
+.drawer-wrap { position: fixed; inset: 0; z-index: 110; background: rgba(2, 10, 6, 0.55); backdrop-filter: blur(4px); display: flex; justify-content: flex-end; animation: fade 0.18s; }
+.drawer { width: min(640px, 100%); height: 100%; background: var(--surface-solid); border-left: 1px solid var(--line-2); box-shadow: var(--shadow-lg); display: flex; flex-direction: column; animation: slideIn 0.25s cubic-bezier(.2, .7, .2, 1); }
+@keyframes slideIn { from { transform: translateX(40px); opacity: 0; } }
+.drawer-h { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 16px 20px; border-bottom: 1px solid var(--line-2); }
+.drawer-h h3 { margin: 0; font-size: 16px; display: flex; align-items: center; gap: 10px; }
+.drawer-body { flex: 1; overflow-y: auto; padding: 20px; }
+.drawer-body .table-wrap { margin: 0 !important; }
+
+/* ---------- accordion (networks) ---------- */
+.acc-list { display: flex; flex-direction: column; gap: 8px; }
+.acc { border: 1px solid var(--line-2); border-radius: 14px; background: var(--inset); overflow: hidden; transition: border-color 0.2s; }
+.acc.open { border-color: var(--line); background: var(--surface); }
+.acc-h { width: 100%; display: flex; align-items: center; gap: 10px; padding: 12px 14px; background: none; border: none; color: var(--text); cursor: pointer; text-align: left; font: inherit; flex-wrap: wrap; }
+.acc-h > svg:last-child { margin-left: auto; transition: transform 0.2s; color: var(--dim); }
+.acc.open .acc-h > svg:last-child { transform: rotate(90deg); }
+.acc-title { display: flex; flex-direction: column; line-height: 1.25; margin-right: auto; min-width: 120px; }
+.acc-title .muted { font-size: 12px; }
+.acc-meta { font-size: 12px; color: var(--muted); }
+.acc-body { padding: 4px 14px 16px; display: flex; flex-direction: column; gap: 14px; border-top: 1px solid var(--line-2); padding-top: 14px; animation: rise 0.25s ease both; }
+.addr-list { display: flex; flex-direction: column; gap: 6px; }
+.addr { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 12px; border: 1px solid var(--line-2); background: var(--inset); flex-wrap: wrap; }
+.addr.paused { opacity: 0.6; }
+.addr-text { font-size: 12px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 100%; display: block; }
+.switch { display: inline-flex; align-items: center; gap: 10px; font-size: 13px; cursor: pointer; user-select: none; }
+.switch input { position: absolute; opacity: 0; width: 0; height: 0; }
+.switch span { width: 38px; height: 22px; border-radius: 99px; background: var(--line-2); border: 1px solid var(--line); position: relative; transition: background 0.2s; flex: none; }
+.switch span::after { content: ''; position: absolute; top: 2px; left: 2px; width: 16px; height: 16px; border-radius: 50%; background: var(--muted); transition: transform 0.2s, background 0.2s; }
+.switch input:checked + span { background: var(--em); border-color: transparent; }
+.switch input:checked + span::after { transform: translateX(16px); background: #fff; }
+.switch input:focus-visible + span { outline: 2px solid var(--em); outline-offset: 2px; }
+
+/* ---------- tables: scroll affordance ---------- */
+.table-wrap { -webkit-overflow-scrolling: touch; scrollbar-width: thin; }
+
+/* ============================================================ tablet (≤1180) */
+@media (max-width: 1180px) {
+  .main { padding: 10px 22px 56px; }
+  .grid { gap: 14px; }
+  .page { gap: 14px; }
+}
+
+/* ============================================================ phones & small tablets (≤860) */
+@media (max-width: 860px) {
+  body { font-size: 14px; }
+  .main { padding: 4px 14px 40px; }
+  .topbar { gap: 8px; margin-bottom: 12px; padding: 10px 0; }
+  .topbar h1 { font-size: 18px; }
+  .topbar .btn.primary.sm { width: 36px; padding: 0; font-size: 0; gap: 0; }
+  .topbar .btn.primary.sm svg { width: 16px; height: 16px; }
+  .card { padding: 16px; border-radius: 16px; }
+  .table-wrap { margin: 0 -16px -16px; }
+  td, th { padding: 10px 14px; }
+  .card-h { margin-bottom: 12px; }
+  .card-h > div:first-child { min-width: 0; flex: 1 1 200px; }
+  .card-h h3 { font-size: 14px; }
+  .stat .value { font-size: 22px; }
+  .balance { font-size: 28px; }
+  .price-big { font-size: 32px; }
+  .action-bar { display: grid; grid-template-columns: 1fr 1fr; }
+  .action-bar .btn { width: 100%; padding: 0 10px; font-size: 13px; }
+  .aff-tabs, .card-h .seg, .card-h > .row.wrap { max-width: 100%; }
+  .seg { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; max-width: 100%; }
+  .seg::-webkit-scrollbar { display: none; }
+  .seg button { white-space: nowrap; flex: none; }
+  .card-h > .row.wrap { width: 100%; }
+  .card-h > .row.wrap .input { flex: 1 1 140px; width: auto !important; }
+  .admin-alerts { flex-direction: column; align-items: stretch; }
+  .admin-alerts .btn { flex: 1 1 auto; }
+  .kv { gap: 8px 12px; }
+  .kv dd { white-space: normal; word-break: break-word; }
+  .legs { gap: 10px; }
+  .tree-canvas { height: 440px; }
+  .canvas-tools .btn.sm.icon { width: 36px; height: 36px; }
+  .canvas-hint { display: none; }
+  .aff-kpi .v { font-size: 18px; }
+  /* dialogs become bottom sheets */
+  .modal-bg { align-items: end; padding: 0; }
+  .modal { width: 100% !important; max-height: 92vh; border-radius: 22px 22px 0 0; animation: sheetUp 0.28s cubic-bezier(.2, .7, .2, 1); padding: 18px 16px calc(18px + env(safe-area-inset-bottom)); }
+  @keyframes sheetUp { from { transform: translateY(40px); opacity: 0; } }
+  .modal::before { content: ''; display: block; width: 40px; height: 4px; border-radius: 4px; background: var(--line); margin: -6px auto 12px; }
+  .drawer { width: 100%; border-left: none; }
+  .method-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); }
+  .coupon-list { grid-template-columns: 1fr; }
+  .qr { width: 160px; height: 160px; }
+  .toasts { left: 12px; right: 12px; bottom: calc(12px + env(safe-area-inset-bottom)); }
+  .toast { max-width: none; }
+  /* 16px inputs stop iOS from zooming the page on focus */
+  .input, .phone-input input, select.input, textarea.input { font-size: 16px; }
+  .hero h1 { font-size: 40px; }
+  .land-nav .in { padding: 12px 16px; gap: 8px; }
+  .container { padding: 0 16px; }
+  .section { padding: 48px 0; }
+  .cta-band h2 { font-size: 28px !important; }
+  .auth-main { padding: 64px 16px 32px; }
+  .join-letter { padding: 24px; }
+}
+
+/* ============================================================ small phones (≤560) */
+@media (max-width: 560px) {
+  .g4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .stat { padding: 14px; }
+  .stat .label { font-size: 12px; gap: 6px; }
+  .stat .icon-box { width: 26px; height: 26px; }
+  .stat .value { font-size: 18px; margin-top: 6px; }
+  .stat .foot { font-size: 11px; }
+  .grid.g4 .leg { padding: 12px; }
+  .product .price-tag { font-size: 24px; }
+  .hero h1 { font-size: 34px; }
+  .hero p.lead { font-size: 16px; }
+  .quick-actions, .action-bar { gap: 8px; }
+  .addr { align-items: flex-start; }
+  .addr > .row { width: 100%; justify-content: flex-end; }
+  .rank-grid { grid-template-columns: 1fr; }
+  .stepper .s span { display: none; }
+  .ticker-row { gap: 12px; }
+}
+
+/* ============================================================ very small (≤380) */
+@media (max-width: 380px) {
+  .g4 { grid-template-columns: 1fr; }
+  .action-bar { grid-template-columns: 1fr; }
+}
+
+/* touch devices: no hover lift jitter, larger targets */
+@media (hover: none) {
+  .card.hover:hover, .stat:hover, .aff-kpi:hover, .rank-card:hover, .lp-card:hover, .cnode:hover, .qa:hover { transform: none; }
+  .btn.sm { min-height: 34px; }
+  .nav-item { padding: 12px; }
+}
